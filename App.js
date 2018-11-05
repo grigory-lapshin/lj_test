@@ -1,7 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { AsyncStorage } from "react-native";
 
 export default class App extends React.Component {
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem("@MySuperStore:key", "I like to save it.");
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -14,8 +23,8 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
