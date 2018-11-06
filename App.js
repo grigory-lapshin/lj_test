@@ -1,30 +1,38 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { AsyncStorage } from "react-native";
+import React from 'react';
+import {
+  StyleSheet, Text, View, AsyncStorage, Button, SafeAreaView,
+} from 'react-native';
+import styled from 'styled-components';
+import PostEditor from './PostEditor';
+import PostsList from './PostsList';
+
+const Screen = styled.SafeAreaView`
+  flex: 1;
+  background-color: #fff;
+`;
+
+const Scroll = styled.ScrollView`
+  flex: 1;
+`;
 
 export default class App extends React.Component {
-  _storeData = async () => {
-    try {
-      await AsyncStorage.setItem("@MySuperStore:key", "I like to save it.");
-    } catch (error) {
-      // Error saving data
-    }
+  state = {
+    isLoading: true,
+    postsIds: null,
+    posts: null,
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>hello world</Text>
-      </View>
+      <Screen>
+        <Scroll>
+          <Text>hello world</Text>
+          <PostEditor />
+          <PostsList />
+        </Scroll>
+      </Screen>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+//

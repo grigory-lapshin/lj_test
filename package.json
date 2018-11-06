@@ -11,10 +11,10 @@
   "dependencies": {
     "date-fns": "^1.29.0",
     "expo": "^31.0.2",
-    "react": "16.5.0",
+    "react": "16.5.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-navigation": "^2.17.0",
-    "styled-components": "^3.4.9"
+    "styled-components": "3.4.10"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx-source": "^7.0.0",
