@@ -1,32 +1,101 @@
 import React from 'react';
-import {
-  StyleSheet, Text, View, TextInput, AsyncStorage, Button,
-} from 'react-native';
+import { Button, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
+import { Ionicons } from '@expo/vector-icons';
 
-import { Screen, Scroll } from './UI';
+import { Screen, Scroll, theme } from './UI';
 import { addPost, storePost, retrivePost } from './storage';
 
-const Container = styled.View`
-  margin-bottom: 30;
+import Userpic from './Userpic';
+
+import userhead from './assets/userhead.png';
+
+const Header = styled.View`
+  flex-flow: row;
+  align-items: center;
+
+  padding-vertical: 30;
+  padding-horizontal: 15;
+`;
+
+const NameBlock = styled.View`
+  flex-grow: 0;
+
+  flex-flow: row;
+  align-items: center;
+
+  margin-left: 28;
+
+  padding-horizontal: 30;
+  padding-vertical: 15;
+
+  background: ${theme.grey300};
+  border-radius: 75;
+`;
+
+const Userhead = styled.Image`
+  height: 30;
+  width: 30;
+`;
+
+const Name = styled.Text`
+  margin-left: 16;
+
+  font-size: 24;
+  line-height: 36;
+  text-transform: lowercase;
+  color: lightblue;
+`;
+
+const Content = styled.View`
+  flex: 1;
+  flex-shrink: 0;
+  padding-horizontal: 15;
+  padding-bottom: 36;
 `;
 
 const TitleInput = styled.TextInput`
-  border: 1px solid;
+  font-size: 24;
+  color: ${theme.black};
 
   margin-bottom: 10;
 `;
 
 const PostTextInput = styled.TextInput`
-  border: 1px solid;
+  font-size: 24;
+  color: ${theme.black};
 
   height: 100;
 `;
 
+const Divider = styled.View`
+  border-bottom-width: 2px;
+  border-bottom-color: hsl(0, 0%, 95%);
+`;
+
+const Submit = styled.TouchableOpacity`
+  padding-horizontal: 15;
+`;
+
+const SubmitButton = ({ onPress, disabled }) => (disabled ? (
+  <Submit onPress={onPress} disabled={disabled}>
+    <Ionicons name="md-send" size={26} color={theme.grey600} />
+  </Submit>
+) : (
+  <Submit onPress={onPress}>
+    <Ionicons name="md-send" size={26} color={theme.blue} />
+  </Submit>
+));
+
 export default class Editor extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'New Post',
-    headerRight: <Button onPress={navigation.getParam('savePost')} title="Submit" />,
+    headerRight: (
+      <SubmitButton
+        onPress={navigation.getParam('savePost')}
+        disabled={navigation.getParam('submitDisabled')}
+      />
+    ),
   });
 
   state = {
@@ -38,6 +107,10 @@ export default class Editor extends React.Component {
 
   componentDidMount = async () => {
     const { navigation } = this.props;
+    const { title } = this.state;
+
+    const submitDisabled = title === '';
+
     const id = navigation.getParam('id', 'NO-ID');
     if (id !== 'NO-ID') {
       const { title, text, date } = await retrivePost(id);
@@ -45,7 +118,22 @@ export default class Editor extends React.Component {
     }
 
     navigation.setParams({ savePost: this.savePost });
+    navigation.setParams({ submitDisabled });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { title } = this.state;
+    const { title: prevTitle } = prevState;
+    const { navigation } = this.props;
+
+    if (title !== '' && title !== prevTitle) {
+      navigation.setParams({ submitDisabled: false });
+    }
+
+    if (title === '' && title !== prevTitle) {
+      navigation.setParams({ submitDisabled: true });
+    }
+  }
 
   savePost = () => {
     const { title, text } = this.state;
@@ -74,15 +162,27 @@ export default class Editor extends React.Component {
     return (
       <Screen>
         <Scroll>
-          <Container>
-            <TitleInput value={title} onChangeText={value => this.setState({ title: value })} />
+          <Header>
+            <Userpic />
+            <NameBlock>
+              <Userhead source={userhead} />
+              <Name>username</Name>
+            </NameBlock>
+          </Header>
+          <Content>
+            <TitleInput
+              value={title}
+              onChangeText={value => this.setState({ title: value })}
+              autoFocus
+            />
+            <Divider />
             <PostTextInput
               value={text}
               onChangeText={value => this.setState({ text: value })}
               multiline
               numberOfLines={10}
             />
-          </Container>
+          </Content>
         </Scroll>
       </Screen>
     );

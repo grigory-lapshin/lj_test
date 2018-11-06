@@ -1,12 +1,12 @@
 import React from 'react';
-import { MaskedViewIOS } from 'react-native';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 
 import Content from './Content';
 
-import userpic from './assets/userpic.png';
 import userhead from './assets/userhead.png';
+
+import Userpic from './Userpic';
 
 const Container = styled.View`
   flex-grow: 1;
@@ -21,26 +21,6 @@ const Header = styled.View`
   padding-horizontal: 15;
 
   background: hsl(0, 0%, 95%);
-`;
-
-const Userpic = styled.Image`
-  height: 85;
-  width: 85;
-`;
-
-const Mask = styled.View`
-  background-color: transparent;
-  flex: 0;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Circle = styled.View`
-  margin-top: 85;
-  height: 85;
-  width: 85;
-  border-radius: 43;
-  background: black;
 `;
 
 const Userhead = styled.Image`
@@ -90,15 +70,7 @@ const ThreeDots = styled.Text`
 const Post = (id, title, text, date, navigate) => (
   <Container>
     <Header>
-      <MaskedViewIOS
-        maskElement={(
-          <Mask>
-            <Circle />
-          </Mask>
-)}
-      >
-        <Userpic source={userpic} />
-      </MaskedViewIOS>
+      <Userpic />
       <Info>
         <NameBlock>
           <Userhead source={userhead} />

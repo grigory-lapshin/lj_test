@@ -13,4 +13,5 @@ export const theme = {
   blue: 'hsl(204, 100%, 50%)',
   grey300: 'hsl(0, 0%, 95%)',
   grey600: 'hsl(0, 0%, 65%)',
+  black: 'hsl(0, 0%, 0%)',
 };
