@@ -10,7 +10,8 @@ import { retrievePostsList } from './storage';
 
 const Container = styled.View`
   border: 1px solid green;
-  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 0;
 `;
 
 const Post = (id, title, text, date, navigate) => (
@@ -29,6 +30,11 @@ const Post = (id, title, text, date, navigate) => (
 );
 
 class PostsList extends React.Component {
+  static navigationOptions = ({ navigation: { navigate } }) => ({
+    title: 'Posts',
+    headerRight: <Button onPress={() => navigate('Editor')} title="New" />,
+  });
+
   state = {
     isLoaded: false,
     posts: null,
@@ -52,6 +58,7 @@ class PostsList extends React.Component {
         <Scroll>
           {isLoaded ? (
             <FlatList
+              contentContainerStyle={{ flexGrow: 1 }}
               data={posts}
               keyExtractor={(e, index) => String(index)}
               renderItem={({

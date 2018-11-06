@@ -46,18 +46,19 @@ export default class Editor extends React.Component {
     const id = navigation.getParam('id', 'NO-ID');
     const date = new Date();
     if (id !== 'NO-ID') {
-      addPost({
-        title,
-        text,
-        date,
-      });
-    } else {
       storePost(id, {
         title,
         text,
         date,
       });
+    } else {
+      addPost({
+        title,
+        text,
+        date,
+      });
     }
+    navigation.navigate('List');
   };
 
   render() {
