@@ -28,6 +28,12 @@ export default class Editor extends React.Component {
     text: '',
   };
 
+  savePost = () => {
+    const { title, text } = this.state;
+    const date = new Date();
+    addPost({ title, text, date });
+  };
+
   render() {
     const { title, text } = this.state;
     return (
@@ -39,7 +45,7 @@ export default class Editor extends React.Component {
           multiline
           numberOfLines={10}
         />
-        <Button title="submit" onPress={() => addPost({ title, text })} />
+        <Button title="submit" onPress={this.savePost} />
       </Container>
     );
   }

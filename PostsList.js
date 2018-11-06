@@ -3,6 +3,7 @@ import {
   StyleSheet, Text, View, TextInput, AsyncStorage, Button, FlatList,
 } from 'react-native';
 import styled from 'styled-components';
+import format from 'date-fns/format';
 
 import { retrievePostsList } from './storage';
 
@@ -11,10 +12,11 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Post = (title, text) => (
+const Post = (title, text, date) => (
   <Container>
     <Text>{title}</Text>
     <Text>{text}</Text>
+    {date ? <Text>{format(date)}</Text> : null}
   </Container>
 );
 
@@ -37,7 +39,8 @@ class PostsList extends React.Component {
     return isLoaded ? (
       <FlatList
         data={posts}
-        renderItem={({ item: { title, text } }) => Post(title, text)}
+        keyExtractor={(e, index) => String(index)}
+        renderItem={({ item: { title, text, date } }) => Post(title, text, date)}
       />
     ) : (
       <Text>no data</Text>
