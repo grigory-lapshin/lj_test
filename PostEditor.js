@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import { addPost } from './storage';
+import { Screen, Scroll } from './UI';
+import { addPost, storePost, retrivePost } from './storage';
 
 const Container = styled.View`
   margin-bottom: 30;
@@ -24,29 +25,59 @@ const PostTextInput = styled.TextInput`
 
 export default class Editor extends React.Component {
   state = {
+    isLoaded: false,
     title: '',
     text: '',
+    date: '',
+  };
+
+  componentDidMount = async () => {
+    const { navigation } = this.props;
+    const id = navigation.getParam('id', 'NO-ID');
+    if (id !== 'NO-ID') {
+      const { title, text, date } = await retrivePost(id);
+      this.setState({ title, text, date });
+    }
   };
 
   savePost = () => {
     const { title, text } = this.state;
+    const { navigation } = this.props;
+    const id = navigation.getParam('id', 'NO-ID');
     const date = new Date();
-    addPost({ title, text, date });
+    if (id !== 'NO-ID') {
+      addPost({
+        title,
+        text,
+        date,
+      });
+    } else {
+      storePost(id, {
+        title,
+        text,
+        date,
+      });
+    }
   };
 
   render() {
     const { title, text } = this.state;
+
     return (
-      <Container>
-        <TitleInput value={title} onChangeText={value => this.setState({ title: value })} />
-        <PostTextInput
-          value={text}
-          onChangeText={value => this.setState({ text: value })}
-          multiline
-          numberOfLines={10}
-        />
-        <Button title="submit" onPress={this.savePost} />
-      </Container>
+      <Screen>
+        <Scroll>
+          <Container>
+            <TitleInput value={title} onChangeText={value => this.setState({ title: value })} />
+            <PostTextInput
+              value={text}
+              onChangeText={value => this.setState({ text: value })}
+              multiline
+              numberOfLines={10}
+            />
+            <Button title="submit" onPress={this.savePost} />
+          </Container>
+        </Scroll>
+      </Screen>
     );
   }
 }

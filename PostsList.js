@@ -5,6 +5,7 @@ import {
 import styled from 'styled-components';
 import format from 'date-fns/format';
 
+import { Screen, Scroll } from './UI';
 import { retrievePostsList } from './storage';
 
 const Container = styled.View`
@@ -12,11 +13,18 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Post = (title, text, date) => (
+const Post = (id, title, text, date, navigate) => (
   <Container>
     <Text>{title}</Text>
     <Text>{text}</Text>
     {date ? <Text>{format(date)}</Text> : null}
+    <Button
+      title="Edit"
+      onPress={() => navigate('Editor', {
+        id,
+      })
+      }
+    />
   </Container>
 );
 
@@ -36,14 +44,28 @@ class PostsList extends React.Component {
 
   render() {
     const { isLoaded, posts } = this.state;
-    return isLoaded ? (
-      <FlatList
-        data={posts}
-        keyExtractor={(e, index) => String(index)}
-        renderItem={({ item: { title, text, date } }) => Post(title, text, date)}
-      />
-    ) : (
-      <Text>no data</Text>
+    const {
+      navigation: { navigate },
+    } = this.props;
+    return (
+      <Screen>
+        <Scroll>
+          {isLoaded ? (
+            <FlatList
+              data={posts}
+              keyExtractor={(e, index) => String(index)}
+              renderItem={({
+                item: {
+                  id, title, text, date,
+                },
+              }) => Post(id, title, text, date, navigate)
+              }
+            />
+          ) : (
+            <Text>no data</Text>
+          )}
+        </Scroll>
+      </Screen>
     );
   }
 }

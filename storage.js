@@ -8,7 +8,19 @@ export const storePost = async (id, value) => {
   }
 };
 
-export const addPost = async (value = { title: 'title', text: 'asdfadf tesxgst asf' }) => {
+export const retrivePost = async (id) => {
+  try {
+    const post = await AsyncStorage.getItem(id);
+    if (post !== null) {
+      const value = JSON.parse(post);
+      return { ...value, id };
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const addPost = async (value) => {
   const now = new Date();
   const id = now.valueOf();
   try {
