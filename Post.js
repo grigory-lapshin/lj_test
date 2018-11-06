@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 
-import { Divider, theme } from './UI';
+import { theme } from './UI';
 
 import Content from './Content';
 import userhead from './assets/userhead.png';

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, Button, FlatList } from 'react-native';
-import styled from 'styled-components';
+import { Text, FlatList } from 'react-native';
 
 import { Screen, Scroll } from './UI';
-import { retrievePostsList, clearData } from './storage';
+import { retrievePostsList } from './storage';
 import Post from './Post';
 import NewPostButton from './NewPostButton';
 
@@ -11,7 +10,7 @@ class PostsList extends React.Component {
   static navigationOptions = {
     title: 'List',
     headerBackTitle: null,
-    headerRight: <Button onPress={() => clearData()} title="Clear All" />,
+    //  headerRight: <Button onPress={() => clearData()} title="Clear All" />,
   };
 
   state = {
@@ -27,12 +26,10 @@ class PostsList extends React.Component {
 
     const { navigation } = this.props;
 
-    const didBlurSubscription = navigation.addListener('willFocus', (payload) => {
+    navigation.addListener('willFocus', (payload) => {
       const {
         action: { type },
       } = payload;
-
-      console.log('willFocus', type);
 
       if (type !== 'Navigation/BACK') {
         this.setState({ isLoaded: false });

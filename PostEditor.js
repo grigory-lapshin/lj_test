@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -96,23 +95,21 @@ export default class Editor extends React.Component {
   });
 
   state = {
-    isLoaded: false,
     title: '',
     text: '',
-    date: '',
   };
 
   componentDidMount = async () => {
     const { navigation } = this.props;
-    const { title } = this.state;
-
-    const submitDisabled = title === '';
 
     const id = navigation.getParam('id', 'NO-ID');
     if (id !== 'NO-ID') {
-      const { title, text, date } = await retrivePost(id);
-      this.setState({ title, text, date });
+      const { title, text } = await retrivePost(id);
+      this.setState({ title, text });
     }
+
+    const { title } = this.state;
+    const submitDisabled = title === '';
 
     navigation.setParams({ savePost: this.savePost });
     navigation.setParams({ submitDisabled });

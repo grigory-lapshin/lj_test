@@ -19,6 +19,7 @@ export const retrivePost = async (id) => {
   } catch (error) {
     console.log(error.message);
   }
+  return null;
 };
 
 export const addPost = async (value) => {
@@ -29,6 +30,7 @@ export const addPost = async (value) => {
   } catch (error) {
     console.log(error.message);
   }
+  return null;
 };
 
 export const retrieveIds = async () => {
@@ -38,6 +40,7 @@ export const retrieveIds = async () => {
   } catch (error) {
     console.log(error.message);
   }
+  return null;
 };
 
 export const retrievePostsList = async () => {
@@ -56,6 +59,7 @@ export const retrievePostsList = async () => {
   } catch (error) {
     console.log(error.message);
   }
+  return null;
 };
 
 export default retrievePostsList;
