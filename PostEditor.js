@@ -24,6 +24,11 @@ const PostTextInput = styled.TextInput`
 `;
 
 export default class Editor extends React.Component {
+  static navigationOptions = {
+    title: 'New Post',
+    headerRight: <Button onPress={this.savePost} title="Submit" />,
+  };
+
   state = {
     isLoaded: false,
     title: '',
@@ -75,7 +80,6 @@ export default class Editor extends React.Component {
               multiline
               numberOfLines={10}
             />
-            <Button title="submit" onPress={this.savePost} />
           </Container>
         </Scroll>
       </Screen>

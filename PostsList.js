@@ -31,8 +31,9 @@ const Post = (id, title, text, date, navigate) => (
 
 class PostsList extends React.Component {
   static navigationOptions = ({ navigation: { navigate } }) => ({
-    title: 'Posts',
+    title: 'List',
     headerRight: <Button onPress={() => navigate('Editor')} title="New" />,
+    headerBackTitle: null,
   });
 
   state = {
