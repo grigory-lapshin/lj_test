@@ -7,27 +7,7 @@ import format from 'date-fns/format';
 
 import { Screen, Scroll } from './UI';
 import { retrievePostsList } from './storage';
-
-const Container = styled.View`
-  border: 1px solid green;
-  flex-grow: 1;
-  flex-shrink: 0;
-`;
-
-const Post = (id, title, text, date, navigate) => (
-  <Container>
-    <Text>{title}</Text>
-    <Text>{text}</Text>
-    {date ? <Text>{format(date)}</Text> : null}
-    <Button
-      title="Edit"
-      onPress={() => navigate('Editor', {
-        id,
-      })
-      }
-    />
-  </Container>
-);
+import Post from './Post';
 
 class PostsList extends React.Component {
   static navigationOptions = ({ navigation: { navigate } }) => ({
