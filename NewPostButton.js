@@ -14,7 +14,7 @@ const NewButton = styled.TouchableOpacity`
   height: 74;
   width: 74;
   border-radius: 37;
-  background: ${theme.blue};
+  background: ${theme.anotherBlue};
 `;
 
 export default ({ onPress }) => (

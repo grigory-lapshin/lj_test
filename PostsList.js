@@ -24,6 +24,33 @@ class PostsList extends React.Component {
     if (Object.prototype.toString.call(posts) === '[object Array]') {
       this.setState({ posts, isLoaded: true });
     }
+
+    const { navigation } = this.props;
+
+    const didBlurSubscription = navigation.addListener('willFocus', (payload) => {
+      const {
+        action: { type },
+      } = payload;
+
+      console.log('willFocus', type);
+
+      if (type !== 'Navigation/BACK') {
+        this.setState({ isLoaded: false });
+        retrievePostsList().then((res) => {
+          if (Object.prototype.toString.call(posts) === '[object Array]') {
+            this.setState({ posts: res, isLoaded: true });
+          }
+        });
+      }
+    });
+  };
+
+  componentDidUpdate = async (prevProps, prevState) => {
+    const { posts } = prevState;
+    const newPosts = await retrievePostsList();
+    if (JSON.stringify(posts) !== JSON.stringify(newPosts)) {
+      this.setState({ posts: newPosts, isLoaded: true });
+    }
   };
 
   render() {
@@ -31,6 +58,7 @@ class PostsList extends React.Component {
     const {
       navigation: { navigate },
     } = this.props;
+
     return (
       <Screen>
         <Scroll>

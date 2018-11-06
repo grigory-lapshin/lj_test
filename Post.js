@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 
+import { Divider, theme } from './UI';
+
 import Content from './Content';
-
 import userhead from './assets/userhead.png';
-
 import Userpic from './Userpic';
 
 const Container = styled.View`
@@ -20,7 +20,7 @@ const Header = styled.View`
   padding-vertical: 30;
   padding-horizontal: 15;
 
-  background: hsl(0, 0%, 95%);
+  background: ${theme.grey300};
 `;
 
 const Userhead = styled.Image`
@@ -45,7 +45,7 @@ const Name = styled.Text`
   font-size: 24;
   line-height: 36;
   text-transform: uppercase;
-  color: lightblue;
+  color: ${theme.blue};
 `;
 
 const PubDate = styled.Text`
@@ -53,7 +53,7 @@ const PubDate = styled.Text`
 
   font-size: 24;
   line-height: 24;
-  color: hsl(0, 0%, 65%);
+  color: ${theme.grey600};
 `;
 
 const EditButton = styled.TouchableOpacity``;
@@ -62,7 +62,7 @@ const ThreeDots = styled.Text`
   font-size: 20;
   letter-spacing: 2;
   line-height: 16;
-  color: hsl(0, 0%, 65%);
+  color: ${theme.grey600};
 
   transform: rotate(90deg);
 `;

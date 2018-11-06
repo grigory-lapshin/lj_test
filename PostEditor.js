@@ -3,7 +3,9 @@ import { Button, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Screen, Scroll, theme } from './UI';
+import {
+  Screen, Scroll, theme, Divider,
+} from './UI';
 import { addPost, storePost, retrivePost } from './storage';
 
 import Userpic from './Userpic';
@@ -44,7 +46,7 @@ const Name = styled.Text`
   font-size: 24;
   line-height: 36;
   text-transform: lowercase;
-  color: lightblue;
+  color: ${theme.blue};
 `;
 
 const Content = styled.View`
@@ -66,11 +68,6 @@ const PostTextInput = styled.TextInput`
   color: ${theme.black};
 
   height: 100;
-`;
-
-const Divider = styled.View`
-  border-bottom-width: 2px;
-  border-bottom-color: hsl(0, 0%, 95%);
 `;
 
 const Submit = styled.TouchableOpacity`

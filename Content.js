@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { Divider, theme } from './UI';
+
 const Container = styled.View`
   flex: 1;
   flex-shrink: 0;
@@ -10,17 +12,12 @@ const Container = styled.View`
 
 const Title = styled.Text`
   font-size: 24;
-  color: hsl(0, 0%, 55%);
-`;
-
-const Divider = styled.View`
-  border-bottom-width: 2px;
-  border-bottom-color: hsl(0, 0%, 95%);
+  color: ${theme.grey800};
 `;
 
 const Post = styled.Text`
   font-size: 24;
-  color: hsl(0, 0%, 55%);
+  color: ${theme.grey800};
 `;
 
 const Content = ({ title, text }) => (
