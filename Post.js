@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, MaskedViewIOS } from 'react-native';
+import { MaskedViewIOS } from 'react-native';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 

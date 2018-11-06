@@ -1,18 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet, Text, View, TextInput, AsyncStorage, Button, FlatList,
-} from 'react-native';
+import { Text, Button, FlatList } from 'react-native';
 import styled from 'styled-components';
-import format from 'date-fns/format';
 
 import { Screen, Scroll } from './UI';
 import { retrievePostsList } from './storage';
 import Post from './Post';
+import NewPostButton from './NewPostButton';
 
 class PostsList extends React.Component {
   static navigationOptions = ({ navigation: { navigate } }) => ({
     title: 'List',
-    headerRight: <Button onPress={() => navigate('Editor')} title="New" />,
     headerBackTitle: null,
   });
 
@@ -53,6 +50,7 @@ class PostsList extends React.Component {
             <Text>no data</Text>
           )}
         </Scroll>
+        <NewPostButton onPress={() => navigate('Editor')} />
       </Screen>
     );
   }
