@@ -24,10 +24,10 @@ const PostTextInput = styled.TextInput`
 `;
 
 export default class Editor extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'New Post',
-    headerRight: <Button onPress={this.savePost} title="Submit" />,
-  };
+    headerRight: <Button onPress={navigation.getParam('savePost')} title="Submit" />,
+  });
 
   state = {
     isLoaded: false,
@@ -43,6 +43,8 @@ export default class Editor extends React.Component {
       const { title, text, date } = await retrivePost(id);
       this.setState({ title, text, date });
     }
+
+    navigation.setParams({ savePost: this.savePost });
   };
 
   savePost = () => {

@@ -104,7 +104,7 @@ const Post = (id, title, text, date, navigate) => (
           <Userhead source={userhead} />
           <Name>USERNAME</Name>
         </NameBlock>
-        {date ? <PubDate>{format(date, ' MMM DD YYYY, HH:MM')}</PubDate> : null}
+        {date ? <PubDate>{format(date, ' MMM DD YYYY, hh:mm')}</PubDate> : null}
       </Info>
       <EditButton
         onPress={() => navigate('Editor', {

@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import isAfter from 'date-fns/is_after';
 
 export const storePost = async (id, value) => {
   try {
@@ -43,13 +44,14 @@ export const retrievePostsList = async () => {
   try {
     const keys = await retrieveIds();
     const postsRaw = await AsyncStorage.multiGet(keys);
-    const posts = postsRaw.reduce((acc, i) => {
-      const id = i[0];
-      const value = JSON.parse(i[1]);
-      const post = { ...value, id };
-      return [...acc, post];
-    }, []);
-    console.log('retrivePosts', posts);
+    const posts = postsRaw
+      .reduce((acc, i) => {
+        const id = i[0];
+        const value = JSON.parse(i[1]);
+        const post = { ...value, id };
+        return [...acc, post];
+      }, [])
+      .sort((a, b) => isAfter(b.date, a.date));
     return posts;
   } catch (error) {
     console.log(error.message);

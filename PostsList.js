@@ -3,15 +3,16 @@ import { Text, Button, FlatList } from 'react-native';
 import styled from 'styled-components';
 
 import { Screen, Scroll } from './UI';
-import { retrievePostsList } from './storage';
+import { retrievePostsList, clearData } from './storage';
 import Post from './Post';
 import NewPostButton from './NewPostButton';
 
 class PostsList extends React.Component {
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = {
     title: 'List',
     headerBackTitle: null,
-  });
+    headerRight: <Button onPress={() => clearData()} title="Clear All" />,
+  };
 
   state = {
     isLoaded: false,
@@ -20,7 +21,6 @@ class PostsList extends React.Component {
 
   componentDidMount = async () => {
     const posts = await retrievePostsList();
-    console.log('posts', posts);
     if (Object.prototype.toString.call(posts) === '[object Array]') {
       this.setState({ posts, isLoaded: true });
     }
